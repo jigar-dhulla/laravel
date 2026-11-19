@@ -26,6 +26,7 @@ use Illuminate\Support\Traits\Macroable;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Throwable;
+use Time\Duration;
 
 use function Illuminate\Support\enum_value;
 
@@ -577,7 +578,7 @@ class Schedule
     /**
      * Register a callback to be invoked when a scheduled task runs for longer than a given amount of time.
      *
-     * @param  \DateTimeInterface|\Carbon\CarbonInterval|float|int  $threshold
+     * @param  \DateTimeInterface|\Carbon\CarbonInterval|\Time\Duration|float|int  $threshold
      * @param  (callable(\Illuminate\Console\Scheduling\Event, float): mixed)  $handler
      * @return void
      */
@@ -585,6 +586,10 @@ class Schedule
     {
         $threshold = $threshold instanceof DateTimeInterface
             ? $this->secondsUntil($threshold)
+            : $threshold;
+
+        $threshold = $threshold instanceof Duration
+            ? $this->durationToInterval($threshold)
             : $threshold;
 
         $threshold = $threshold instanceof CarbonInterval

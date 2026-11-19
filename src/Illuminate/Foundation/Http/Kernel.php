@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\InteractsWithTime;
 use InvalidArgumentException;
 use Throwable;
+use Time\Duration;
 
 class Kernel implements KernelContract
 {
@@ -265,7 +266,7 @@ class Kernel implements KernelContract
     /**
      * Register a callback to be invoked when the requests lifecycle duration exceeds a given amount of time.
      *
-     * @param  \DateTimeInterface|\Carbon\CarbonInterval|float|int  $threshold
+     * @param  \DateTimeInterface|\Carbon\CarbonInterval|\Time\Duration|float|int  $threshold
      * @param  callable  $handler
      * @return void
      */
@@ -273,6 +274,10 @@ class Kernel implements KernelContract
     {
         $threshold = $threshold instanceof DateTimeInterface
             ? $this->secondsUntil($threshold) * 1000
+            : $threshold;
+
+        $threshold = $threshold instanceof Duration
+            ? $this->durationToInterval($threshold)
             : $threshold;
 
         $threshold = $threshold instanceof CarbonInterval

@@ -25,6 +25,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use RuntimeException;
 use stdClass;
+use Time\Duration;
 use Traversable;
 
 class SupportHelpersTest extends TestCase
@@ -1073,6 +1074,25 @@ class SupportHelpersTest extends TestCase
 
         // Make sure we waited 100ms for the first attempt
         Sleep::assertSleptTimes(1);
+
+        Sleep::assertSequence([
+            Sleep::usleep(100_000),
+        ]);
+    }
+
+    public function testRetryWithDurationSleep()
+    {
+        Sleep::fake();
+
+        $attempts = retry(2, function ($attempts) {
+            if ($attempts > 1) {
+                return $attempts;
+            }
+
+            throw new RuntimeException;
+        }, Duration::fromMilliseconds(100));
+
+        $this->assertEquals(2, $attempts);
 
         Sleep::assertSequence([
             Sleep::usleep(100_000),

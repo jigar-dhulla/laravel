@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use PDO;
 use PHPUnit\Framework\TestCase;
+use Time\Duration;
 
 class QueryDurationThresholdTest extends TestCase
 {
@@ -31,6 +32,22 @@ class QueryDurationThresholdTest extends TestCase
         $this->assertSame(0, $called);
 
         $connection->logQuery('xxxx', [], 0.1);
+        $this->assertSame(1, $called);
+    }
+
+    public function testItCanHandleReachingADurationThresholdGivenAsDuration()
+    {
+        $connection = new Connection(new PDO('sqlite::memory:'));
+        $connection->setEventDispatcher(new Dispatcher());
+        $called = 0;
+        $connection->whenQueryingForLongerThan(Duration::fromMilliseconds(500), function () use (&$called) {
+            $called++;
+        });
+
+        $connection->logQuery('xxxx', [], 400.0);
+        $this->assertSame(0, $called);
+
+        $connection->logQuery('xxxx', [], 200.0);
         $this->assertSame(1, $called);
     }
 

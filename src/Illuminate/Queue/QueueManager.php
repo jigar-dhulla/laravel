@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\Monitor as MonitorContract;
 use Illuminate\Support\InteractsWithTime;
 use Illuminate\Support\Queue\Concerns\ResolvesQueueRoutes;
 use InvalidArgumentException;
+use Time\Duration;
 use UnitEnum;
 
 use function Illuminate\Support\enum_value;
@@ -132,7 +133,7 @@ class QueueManager implements FactoryContract, MonitorContract
     /**
      * Register a callback to be invoked when a job runs for longer than a given amount of time.
      *
-     * @param  \DateTimeInterface|\Carbon\CarbonInterval|float|int  $threshold
+     * @param  \DateTimeInterface|\Carbon\CarbonInterval|\Time\Duration|float|int  $threshold
      * @param  callable  $handler
      * @return void
      */
@@ -140,6 +141,10 @@ class QueueManager implements FactoryContract, MonitorContract
     {
         $threshold = $threshold instanceof DateTimeInterface
             ? $this->secondsUntil($threshold) * 1000
+            : $threshold;
+
+        $threshold = $threshold instanceof Duration
+            ? $this->durationToInterval($threshold)
             : $threshold;
 
         $threshold = $threshold instanceof CarbonInterval

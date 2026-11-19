@@ -14,6 +14,7 @@ use Illuminate\Support\Optional;
 use Illuminate\Support\Sleep;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable as SupportStringable;
+use Time\Duration;
 
 if (! function_exists('append_config')) {
     /**
@@ -302,7 +303,7 @@ if (! function_exists('retry')) {
      *
      * @param  int|array<int, int>  $times
      * @param  callable(int): TValue  $callback
-     * @param  CarbonInterval|int|\Closure(int, \Throwable): CarbonInterval|int  $sleepMilliseconds
+     * @param  CarbonInterval|\Time\Duration|int|\Closure(int, \Throwable): CarbonInterval|\Time\Duration|int  $sleepMilliseconds
      * @param  (callable(\Throwable): bool)|null  $when
      * @return TValue
      *
@@ -336,9 +337,11 @@ if (! function_exists('retry')) {
             if ($sleepMilliseconds) {
                 $duration = value($sleepMilliseconds, $attempts, $e);
 
-                $duration instanceof CarbonInterval
-                    ? Sleep::usleep($duration->totalMicroseconds)
-                    : Sleep::usleep($duration * 1000);
+                match (true) {
+                    $duration instanceof CarbonInterval => Sleep::usleep($duration->totalMicroseconds),
+                    $duration instanceof Duration => Sleep::for($duration),
+                    default => Sleep::usleep($duration * 1000),
+                };
             }
 
             goto beginning;

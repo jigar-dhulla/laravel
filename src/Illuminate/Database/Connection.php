@@ -24,6 +24,7 @@ use Illuminate\Support\Traits\Macroable;
 use PDO;
 use PDOStatement;
 use RuntimeException;
+use Time\Duration;
 
 use function Illuminate\Support\enum_value;
 
@@ -942,7 +943,7 @@ class Connection implements ConnectionInterface
     /**
      * Register a callback to be invoked when the connection queries for longer than a given amount of time.
      *
-     * @param  \DateTimeInterface|\Carbon\CarbonInterval|float|int  $threshold
+     * @param  \DateTimeInterface|\Carbon\CarbonInterval|\Time\Duration|float|int  $threshold
      * @param  (callable(\Illuminate\Database\Connection, \Illuminate\Database\Events\QueryExecuted): mixed)  $handler
      * @return void
      */
@@ -950,6 +951,10 @@ class Connection implements ConnectionInterface
     {
         $threshold = $threshold instanceof DateTimeInterface
             ? $this->secondsUntil($threshold) * 1000
+            : $threshold;
+
+        $threshold = $threshold instanceof Duration
+            ? $this->durationToInterval($threshold)
             : $threshold;
 
         $threshold = $threshold instanceof CarbonInterval
