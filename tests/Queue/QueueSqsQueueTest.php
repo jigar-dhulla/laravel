@@ -37,6 +37,7 @@ use Laravel\SerializableClosure\SerializableClosure;
 use PHPUnit\Framework\Attributes\After;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use Time\Duration;
 
 class QueueSqsQueueTest extends TestCase
 {
@@ -227,6 +228,17 @@ class QueueSqsQueueTest extends TestCase
         $queue->setContainer($container->instance());
         $this->expectSqsCommand('sendMessage', ['QueueUrl' => $this->queueUrl, 'MessageBody' => $this->isPayloadOf($this->mockedJob), 'DelaySeconds' => 5], $this->mockedSendMessageResponseModel);
         $id = $queue->later($now->copy()->addSeconds(5), $this->mockedJob, $this->mockedData, $this->queueName);
+        $this->assertEquals($this->mockedMessageId, $id);
+        $container->received('bound')->with('events')->times(2);
+    }
+
+    public function testDelayedPushWithDurationProperlyPushesJobOntoSqs()
+    {
+        $queue = new SqsQueue($this->sqs, $this->queueName, $this->prefix);
+        $container = Double::for(Container::class, override: true);
+        $queue->setContainer($container->instance());
+        $this->expectSqsCommand('sendMessage', ['QueueUrl' => $this->queueUrl, 'MessageBody' => $this->isPayloadOf($this->mockedJob), 'DelaySeconds' => 30], $this->mockedSendMessageResponseModel);
+        $id = $queue->later(Duration::fromSeconds(30), $this->mockedJob, $this->mockedData, $this->queueName);
         $this->assertEquals($this->mockedMessageId, $id);
         $container->received('bound')->with('events')->times(2);
     }

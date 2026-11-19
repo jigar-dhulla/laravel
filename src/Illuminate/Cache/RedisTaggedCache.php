@@ -53,7 +53,7 @@ class RedisTaggedCache extends TaggedCache
      *
      * @param  \UnitEnum|string  $key
      * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function add($key, $value, $ttl = null)
@@ -83,7 +83,7 @@ class RedisTaggedCache extends TaggedCache
      *
      * @param  \UnitEnum|string  $key
      * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function put($key, $value, $ttl = null)
@@ -112,7 +112,7 @@ class RedisTaggedCache extends TaggedCache
      * Set the expiration of a cached item.
      *
      * @param  \UnitEnum|string  $key
-     * @param  \DateTimeInterface|\DateInterval|int  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $ttl
      * @return bool
      */
     public function touch($key, $ttl)

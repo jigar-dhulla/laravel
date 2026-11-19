@@ -5,13 +5,14 @@ namespace Illuminate\Support;
 use Carbon\CarbonInterval;
 use DateInterval;
 use DateTimeInterface;
+use Time\Duration;
 
 trait InteractsWithTime
 {
     /**
      * Get the number of seconds until the given DateTime.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @return int
      */
     protected function secondsUntil($delay)
@@ -26,7 +27,7 @@ trait InteractsWithTime
     /**
      * Get the "available at" UNIX timestamp.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @return int
      */
     protected function availableAt($delay = 0)
@@ -41,16 +42,33 @@ trait InteractsWithTime
     /**
      * If the given value is an interval, convert it to a DateTime instance.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @return \DateTimeInterface|int
      */
     protected function parseDateInterval($delay)
     {
+        if ($delay instanceof Duration) {
+            $delay = $this->durationToInterval($delay);
+        }
+
         if ($delay instanceof DateInterval) {
             $delay = Carbon::now()->add($delay);
         }
 
         return $delay;
+    }
+
+    /**
+     * Convert the given duration to a Carbon interval.
+     *
+     * @param  \Time\Duration  $duration
+     * @return \Carbon\CarbonInterval
+     */
+    protected function durationToInterval($duration)
+    {
+        return CarbonInterval::seconds($duration->seconds)
+            ->microseconds(intdiv($duration->nanoseconds, 1000))
+            ->invert($duration->negative);
     }
 
     /**

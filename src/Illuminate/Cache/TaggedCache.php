@@ -38,7 +38,7 @@ class TaggedCache extends Repository
      * Store multiple items in the cache for a given number of seconds.
      *
      * @param  array  $values
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function putMany(array $values, $ttl = null)

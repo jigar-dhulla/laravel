@@ -11,6 +11,7 @@ use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use Time\Duration;
 
 class SleepTest extends TestCase
 {
@@ -153,6 +154,15 @@ class SleepTest extends TestCase
         Sleep::fake();
 
         $sleep = Sleep::for(CarbonInterval::seconds(1)->addMilliseconds(5));
+
+        $this->assertSame(1_005_000.0, (float) $sleep->duration->totalMicroseconds);
+    }
+
+    public function testItCanUseDuration()
+    {
+        Sleep::fake();
+
+        $sleep = Sleep::for(Duration::fromMilliseconds(1_005));
 
         $this->assertSame(1_005_000.0, (float) $sleep->duration->totalMicroseconds);
     }

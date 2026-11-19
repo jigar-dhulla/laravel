@@ -125,7 +125,7 @@ class MemoizedTaggedCache extends TaggedCache
      *
      * @param  \UnitEnum|array|string  $key
      * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function put($key, $value, $ttl = null)
@@ -145,7 +145,7 @@ class MemoizedTaggedCache extends TaggedCache
      * Store multiple items in the cache for a given number of seconds.
      *
      * @param  array  $values
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function putMany(array $values, $ttl = null)
@@ -162,7 +162,7 @@ class MemoizedTaggedCache extends TaggedCache
      *
      * @param  \UnitEnum|string  $key
      * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function add($key, $value, $ttl = null)
@@ -226,7 +226,7 @@ class MemoizedTaggedCache extends TaggedCache
      * Adjust the expiration time of a cached item.
      *
      * @param  \UnitEnum|string  $key
-     * @param  \DateTimeInterface|\DateInterval|int  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $ttl
      * @return bool
      */
     public function touch($key, $ttl)

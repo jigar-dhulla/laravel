@@ -358,7 +358,7 @@ class UrlGenerator implements UrlGeneratorContract
      *
      * @param  \BackedEnum|string  $name
      * @param  mixed  $parameters
-     * @param  \DateTimeInterface|\DateInterval|int|null  $expiration
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $expiration
      * @param  bool  $absolute
      * @return string
      *
@@ -414,7 +414,7 @@ class UrlGenerator implements UrlGeneratorContract
      * Create a temporary signed route URL for a named route.
      *
      * @param  \BackedEnum|string  $name
-     * @param  \DateTimeInterface|\DateInterval|int  $expiration
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $expiration
      * @param  array  $parameters
      * @param  bool  $absolute
      * @return string

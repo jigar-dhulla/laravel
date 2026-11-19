@@ -158,7 +158,7 @@ class Redirector
      *
      * @param  \BackedEnum|string  $route
      * @param  mixed  $parameters
-     * @param  \DateTimeInterface|\DateInterval|int|null  $expiration
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $expiration
      * @param  int  $status
      * @param  array  $headers
      * @return \Illuminate\Http\RedirectResponse
@@ -172,7 +172,7 @@ class Redirector
      * Create a new redirect response to a signed named route.
      *
      * @param  \BackedEnum|string  $route
-     * @param  \DateTimeInterface|\DateInterval|int|null  $expiration
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $expiration
      * @param  mixed  $parameters
      * @param  int  $status
      * @param  array  $headers

@@ -48,7 +48,7 @@ class QueuedClosure
     /**
      * The number of seconds before the job should be made available.
      *
-     * @var \DateTimeInterface|\DateInterval|int|null
+     * @var \DateTimeInterface|\DateInterval|\Time\Duration|int|null
      */
     public $delay;
 
@@ -130,7 +130,7 @@ class QueuedClosure
     /**
      * Set the desired delay in seconds for the job.
      *
-     * @param  \DateTimeInterface|\DateInterval|int|null  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $delay
      * @return $this
      */
     public function delay($delay)

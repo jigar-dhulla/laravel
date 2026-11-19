@@ -76,7 +76,7 @@ interface Queue
     /**
      * Push a new job onto the queue after (n) seconds.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  string|object  $job
      * @param  mixed  $data
      * @param  string|null  $queue
@@ -88,7 +88,7 @@ interface Queue
      * Push a new job onto a specific queue after (n) seconds.
      *
      * @param  string  $queue
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  string|object  $job
      * @param  mixed  $data
      * @return mixed

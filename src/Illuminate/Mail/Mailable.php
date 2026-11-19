@@ -254,7 +254,7 @@ class Mailable implements MailableContract, Renderable
     /**
      * Deliver the queued message after (n) seconds.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  \Illuminate\Contracts\Queue\Factory  $queue
      * @return mixed
      */

@@ -635,7 +635,7 @@ class MailFake implements Factory, Fake, Mailer, MailQueue
     /**
      * Queue a new e-mail message for sending after (n) seconds.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  \Illuminate\Contracts\Mail\Mailable|string|array  $view
      * @param  string|null  $queue
      * @return mixed
@@ -653,7 +653,7 @@ class MailFake implements Factory, Fake, Mailer, MailQueue
      * Queue a new e-mail message for sending after (n) seconds on the given queue.
      *
      * @param  string|null  $queue
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  \Illuminate\Contracts\Mail\Mailable  $view
      * @return mixed
      */

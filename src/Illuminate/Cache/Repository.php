@@ -361,7 +361,7 @@ class Repository implements ArrayAccess, CacheContract
      *
      * @param  \UnitEnum|array|string  $key
      * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function put($key, $value, $ttl = null)
@@ -400,7 +400,7 @@ class Repository implements ArrayAccess, CacheContract
      *
      * @param  \UnitEnum|array|string  $key
      * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      */
     public function set($key, $value, $ttl = null): bool
     {
@@ -410,7 +410,7 @@ class Repository implements ArrayAccess, CacheContract
     /**
      * Store multiple items in the cache for a given number of seconds.
      *
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function putMany(array $values, $ttl = null)
@@ -471,7 +471,7 @@ class Repository implements ArrayAccess, CacheContract
      *
      * @param  \UnitEnum|array|string  $key
      * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function add($key, $value, $ttl = null)
@@ -561,7 +561,7 @@ class Repository implements ArrayAccess, CacheContract
      * @template TCacheValue
      *
      * @param  \UnitEnum|string  $key
-     * @param  \Closure|\DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \Closure|\DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @param  \Closure(): TCacheValue  $callback
      * @return TCacheValue
      */
@@ -576,7 +576,7 @@ class Repository implements ArrayAccess, CacheContract
      * @template TCacheValue
      *
      * @param  \UnitEnum|string  $key
-     * @param  \Closure|\DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \Closure|\DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @param  \Closure(): TCacheValue  $callback
      * @return array{TCacheValue, bool} The cached value and whether it was warm.
      */
@@ -643,7 +643,7 @@ class Repository implements ArrayAccess, CacheContract
      * @template TCacheValue
      *
      * @param  \UnitEnum|string  $key
-     * @param  array{ 0: \DateTimeInterface|\DateInterval|int, 1: \DateTimeInterface|\DateInterval|int }  $ttl
+     * @param  array{ 0: \DateTimeInterface|\DateInterval|\Time\Duration|int, 1: \DateTimeInterface|\DateInterval|\Time\Duration|int }  $ttl
      * @param  (callable(): TCacheValue)  $callback
      * @param  array{ seconds?: int, owner?: string }|null  $lock
      * @param  bool  $alwaysDefer
@@ -695,7 +695,7 @@ class Repository implements ArrayAccess, CacheContract
      * Set the expiration of a cached item.
      *
      * @param  \UnitEnum|string  $key
-     * @param  \DateTimeInterface|\DateInterval|int  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $ttl
      * @return bool
      */
     public function touch($key, $ttl)
@@ -897,7 +897,7 @@ class Repository implements ArrayAccess, CacheContract
     /**
      * Calculate the number of seconds for the given TTL.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $ttl
      * @return int
      */
     protected function getSeconds($ttl)

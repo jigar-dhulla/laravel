@@ -23,7 +23,7 @@ interface Repository extends CacheInterface
      *
      * @param  \UnitEnum|string  $key
      * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function put($key, $value, $ttl = null);
@@ -33,7 +33,7 @@ interface Repository extends CacheInterface
      *
      * @param  \UnitEnum|string  $key
      * @param  mixed  $value
-     * @param  \DateTimeInterface|\DateInterval|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $ttl
      * @return bool
      */
     public function add($key, $value, $ttl = null);
@@ -71,7 +71,7 @@ interface Repository extends CacheInterface
      * @template TCacheValue
      *
      * @param  \UnitEnum|string  $key
-     * @param  \DateTimeInterface|\DateInterval|\Closure|int|null  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|\Closure|int|null  $ttl
      * @param  \Closure(): TCacheValue  $callback
      * @return TCacheValue
      */
@@ -103,7 +103,7 @@ interface Repository extends CacheInterface
      * Set the expiration of a cached item.
      *
      * @param  \UnitEnum|string  $key
-     * @param  \DateTimeInterface|\DateInterval|int  $ttl
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $ttl
      * @return bool
      */
     public function touch($key, $ttl);

@@ -466,7 +466,7 @@ class RedisQueue extends Queue implements QueueContract, ClearableQueue
     /**
      * Push a new job onto the queue after a delay.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  object|string  $job
      * @param  mixed  $data
      * @param  \UnitEnum|string|null  $queue
@@ -488,7 +488,7 @@ class RedisQueue extends Queue implements QueueContract, ClearableQueue
     /**
      * Push a raw job onto the queue after (n) seconds.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  string  $payload
      * @param  string|null  $queue
      * @return mixed

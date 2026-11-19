@@ -8,6 +8,7 @@ use DateInterval;
 use Illuminate\Support\Traits\Macroable;
 use PHPUnit\Framework\Assert as PHPUnit;
 use RuntimeException;
+use Time\Duration;
 
 class Sleep
 {
@@ -79,7 +80,7 @@ class Sleep
     /**
      * Create a new class instance.
      *
-     * @param  int|float|\DateInterval  $duration
+     * @param  int|float|\DateInterval|\Time\Duration  $duration
      */
     public function __construct($duration)
     {
@@ -89,7 +90,7 @@ class Sleep
     /**
      * Sleep for the given duration.
      *
-     * @param  \DateInterval|int|float  $duration
+     * @param  \DateInterval|\Time\Duration|int|float  $duration
      * @return static
      */
     public static function for($duration)
@@ -137,11 +138,17 @@ class Sleep
     /**
      * Sleep for the given duration. Replaces any previously defined duration.
      *
-     * @param  \DateInterval|int|float  $duration
+     * @param  \DateInterval|\Time\Duration|int|float  $duration
      * @return $this
      */
     protected function duration($duration)
     {
+        if ($duration instanceof Duration) {
+            $duration = CarbonInterval::seconds($duration->seconds)
+                ->microseconds(intdiv($duration->nanoseconds, 1000))
+                ->invert($duration->negative);
+        }
+
         if (! $duration instanceof DateInterval) {
             $this->duration = CarbonInterval::microsecond(0);
 

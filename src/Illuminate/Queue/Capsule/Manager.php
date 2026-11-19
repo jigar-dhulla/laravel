@@ -115,7 +115,7 @@ class Manager
     /**
      * Push a new job onto the queue after (n) seconds.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  string  $job
      * @param  mixed  $data
      * @param  string|null  $queue

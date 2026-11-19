@@ -191,7 +191,7 @@ class Queue implements QueueContract, ClearableQueue
     /**
      * Push a new job onto the queue after (n) seconds.
      *
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  string|object  $job
      * @param  mixed  $data
      * @param  string|null  $queue
@@ -206,7 +206,7 @@ class Queue implements QueueContract, ClearableQueue
      * Push a new job onto a specific queue after (n) seconds.
      *
      * @param  string  $queue
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  string|object  $job
      * @param  mixed  $data
      * @return mixed
@@ -451,7 +451,7 @@ class Queue implements QueueContract, ClearableQueue
      * @param  mixed  $job
      * @param  string|null  $queue
      * @param  string  $payload
-     * @param  \DateTimeInterface|\DateInterval|int|null  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $delay
      * @return array{DelaySeconds?: int, MessageGroupId?: string, MessageDeduplicationId?: string}
      */
     public function getQueueableOptions($job, $queue, $payload, $delay = null): array

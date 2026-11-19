@@ -28,6 +28,7 @@ use JMac\Testing\Matching\Argument;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Time\Duration;
 
 class CacheRepositoryTest extends TestCase
 {
@@ -264,6 +265,17 @@ class CacheRepositoryTest extends TestCase
         $storeWithoutAdd->expects('put')->with('k', 'v', 60)->returns(true);
         $repository = new Repository($storeWithoutAdd);
         $this->assertTrue($repository->add('k', 'v', DateInterval::createFromDateString('60 seconds')));
+    }
+
+    public function testPutAndAddMethodsCanAcceptDurations()
+    {
+        $store = Double::for(RedisStore::class);
+        $store->expects('put')->with('k', 'v', 600)->returns(true);
+        $store->expects('add')->with('k', 'v', 61)->returns(true);
+        $repository = new Repository($store);
+
+        $this->assertTrue($repository->put('k', 'v', Duration::fromMinutes(10)));
+        $this->assertTrue($repository->add('k', 'v', Duration::fromSeconds(61)));
     }
 
     public function testAddMethodCanAcceptDateTimeInterface()

@@ -89,7 +89,7 @@ abstract class Queue
      * Push a new job onto a specific queue after (n) seconds.
      *
      * @param  string  $queue
-     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int  $delay
      * @param  string  $job
      * @param  mixed  $data
      * @return mixed
@@ -120,7 +120,7 @@ abstract class Queue
      * @param  \Closure|string|object  $job
      * @param  string  $queue
      * @param  mixed  $data
-     * @param  \DateTimeInterface|\DateInterval|int|null  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $delay
      * @return string
      *
      * @throws \Illuminate\Queue\InvalidPayloadException
@@ -367,7 +367,7 @@ abstract class Queue
      * @param  \Closure|string|object  $job
      * @param  string  $payload
      * @param  string|null  $queue
-     * @param  \DateTimeInterface|\DateInterval|int|null  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $delay
      * @param  callable  $callback
      * @return mixed
      */
@@ -472,7 +472,7 @@ abstract class Queue
      * @param  string|null  $queue
      * @param  \Closure|string|object  $job
      * @param  string  $payload
-     * @param  \DateTimeInterface|\DateInterval|int|null  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $delay
      * @return void
      */
     protected function raiseJobQueueingEvent($queue, $job, $payload, $delay)
@@ -491,7 +491,7 @@ abstract class Queue
      * @param  string|int|null  $jobId
      * @param  \Closure|string|object  $job
      * @param  string  $payload
-     * @param  \DateTimeInterface|\DateInterval|int|null  $delay
+     * @param  \DateTimeInterface|\DateInterval|\Time\Duration|int|null  $delay
      * @return void
      */
     protected function raiseJobQueuedEvent($queue, $jobId, $job, $payload, $delay)

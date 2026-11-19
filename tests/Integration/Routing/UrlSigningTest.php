@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Orchestra\Testbench\TestCase;
+use Time\Duration;
 
 class UrlSigningTest extends TestCase
 {
@@ -87,6 +88,20 @@ class UrlSigningTest extends TestCase
 
         Carbon::setTestNow(Carbon::create(2018, 1, 1));
         $this->assertIsString($url = URL::temporarySignedRoute('foo', Carbon::now()->addMinutes(5), ['id' => 1]));
+        $this->assertSame('valid', $this->get($url)->original);
+
+        Carbon::setTestNow(Carbon::create(2018, 1, 1)->addMinutes(10));
+        $this->assertSame('invalid', $this->get($url)->original);
+    }
+
+    public function testTemporarySignedUrlsWithDuration()
+    {
+        Route::get('/foo/{id}', function (Request $request, $id) {
+            return $request->hasValidSignature() ? 'valid' : 'invalid';
+        })->name('foo');
+
+        Carbon::setTestNow(Carbon::create(2018, 1, 1));
+        $this->assertIsString($url = URL::temporarySignedRoute('foo', Duration::fromMinutes(5), ['id' => 1]));
         $this->assertSame('valid', $this->get($url)->original);
 
         Carbon::setTestNow(Carbon::create(2018, 1, 1)->addMinutes(10));
